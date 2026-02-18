@@ -1,6 +1,17 @@
+<div align="center">
+
 # FSE (Flash Starling Enhance) 混合渲染框架
 
-FSE是一个用于Flash AS3的轻量GPU混合渲染框架。旨在使用传统Flash开发方法快速构建能够与Unity体验相近的2D高帧率应用。
+**FSE是一个用于Flash AS3的轻量GPU混合渲染框架。旨在使用传统Flash开发方法快速构建能够与Unity体验相近的2D高帧率应用。**
+
+[![GitHub stars](https://img.shields.io/github/stars/und666/FlashStarlingEnhance?style=social)](https://github.com/und666/FlashStarlingEnhance/stargazers)
+![visitors](https://visitor-badge.laobi.icu/badge?page_id=FlashStarlingEnhance&left_color=green&right_color=red)
+
+
+https://github.com/user-attachments/assets/65afb2fe-926f-4096-930b-0b4742105d73
+
+
+</div>
 
 ## 特点
 
@@ -74,7 +85,7 @@ FSE是一个用于Flash AS3的轻量GPU混合渲染框架。旨在使用传统Fl
 \
 **3. 在你的项目中注入Starling框架。**
 - Flash IDE工程中
-  ```
+  ```haxe
   //在舞台根目录第一帧上
   import fse.core.FSE;
   FSE.init(stage,this);
@@ -85,7 +96,7 @@ FSE是一个用于Flash AS3的轻量GPU混合渲染框架。旨在使用传统Fl
   ```
 
 - IDEA/FB/FD工程中
-  ```
+  ```haxe
   //在你的类文件中
   package {
       import flash.display.Sprite;
@@ -117,7 +128,7 @@ FSE是一个用于Flash AS3的轻量GPU混合渲染框架。旨在使用传统Fl
   - 默认情况下，FSE会自动管理所有MovieClip的播放，但你可以通过以下方式来手动控制播放
 
 - **常用API**
-  ```
+  ```haxe
   //=====初始化================================================================
 
   fse.init(stage,Object(root));
@@ -201,7 +212,7 @@ FSE是一个用于Flash AS3的轻量GPU混合渲染框架。旨在使用传统Fl
   ```
 
 - **高级API**
-  ```
+  ```haxe
   fse.cpu(mc:MovieClip);
   fse.ban(mc:MovieClip); //与上一行等效
   fse.isIgnore(mc:MovieClip):Boolean //获取mc对象的特例状态
