@@ -88,7 +88,8 @@
         private static var _logicFrameRate:int = 60; //逻辑帧率
         private static var _logicTimestep:Number = 1000.0 / _logicFrameRate;
         
-		private static var _case_render:Array = [isInputText,isSimpleButton]; //经过这些断言判断为真的话不用starling渲染
+		private static var _case_render:Array = [isText,isSimpleButton]; //经过这些断言判断为真的话不用starling渲染
+		
 		
 		//输入文本断言
 		private static function isInputText(obj:DisplayObject):Boolean {
@@ -100,6 +101,10 @@
 			return false;
 		}
 		
+		//文本断言
+		private static function isText(obj:DisplayObject):Boolean {
+			return obj is TextField;
+		}
 		//按钮断言
 		private static function isSimpleButton(obj:*):Boolean{
 			// 检查是否为flash.display.SimpleButton实例

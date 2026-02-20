@@ -51,9 +51,8 @@
 		public function getTexture(bmd:BitmapData):Object
 		{
 			if (!bmd) return null;
-
-			var rawHash:String = Hash.getHash(bmd);
-			var key:String = MD5.getMD5(rawHash);
+			
+			var key:String = Hash.getFastHash(bmd);
 			var tex:Texture;
 
 			// 1. 命中缓存 (无论是图集里的还是独立的，都在这里取)

@@ -11,6 +11,64 @@
         {
         }
         
+        
+        
+        
+        
+        /**
+         * 极速位图哈希 (使用 FNV-1a 算法替代 MD5)
+         */
+        public static function getFastHash(bmd:BitmapData):String
+        {
+            if (!bmd) return "null";
+            var width:int = bmd.width;
+            var height:int = bmd.height;
+            
+            if (width <= 0 || height <= 0) return "empty";
+            
+            // FNV-1a 32-bit 初始化常数
+            var hash:uint = 2166136261;
+            hash ^= width;
+            hash *= 16777619;
+            hash ^= height;
+            hash *= 16777619;
+            
+            var centerX:Number = width / 2;
+            var centerY:Number = height / 2;
+            var diag1StepX:Number = (width - 1) / 9;
+            var diag1StepY:Number = (height - 1) / 9;
+            var diag2StartX:Number = width - 1;
+            var diag2StepX:Number = -(diag2StartX / 9);
+            var diag2StepY:Number = (height - 1) / 9;
+            
+            // 纯数学遍历，零字符串拼接
+            for (var i:int = 0; i < 10; i++)
+            {
+                var p1:int = Math.round((height / 9) * i);
+                var p2:int = Math.round((width / 9) * i);
+                var dx1:int = Math.round(diag1StepX * i);
+                var dy1:int = Math.round(diag1StepY * i);
+                var dx2:int = Math.round(diag2StartX + diag2StepX * i);
+                var dy2:int = Math.round(diag2StepY * i);
+                
+                // 1. 垂直线
+                hash ^= (p1 >= 0 && p1 < height) ? bmd.getPixel(centerX, p1) : 0;
+                hash *= 16777619;
+                // 2. 水平线
+                hash ^= (p2 >= 0 && p2 < width) ? bmd.getPixel(p2, centerY) : 0;
+                hash *= 16777619;
+                // 3. 主对角
+                hash ^= (dx1 >= 0 && dx1 < width && dy1 >= 0 && dy1 < height) ? bmd.getPixel(dx1, dy1) : 0;
+                hash *= 16777619;
+                // 4. 副对角
+                hash ^= (dx2 >= 0 && dx2 < width && dy2 >= 0 && dy2 < height) ? bmd.getPixel(dx2, dy2) : 0;
+                hash *= 16777619;
+            }
+            
+            // 最终只输出一次短小精悍的 16 进制字符串作为 Key
+            return hash.toString(16);
+        }
+        
         /**
          * 获取位图的哈希值
          * @param bmd 位图数据

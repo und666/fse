@@ -182,7 +182,6 @@ import fse.core.FSE_Manager;
 					}
 				}else{
 					//hide(target);
-					
 				}
 			}
 		}

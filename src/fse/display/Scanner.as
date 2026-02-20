@@ -53,13 +53,13 @@ public class Scanner
 		}
 		
 		// 2. 遍历子对象 (可能是 子MC，也可能是 Shape)
-		var currentFlashChildren:Vector.<DisplayObject> = new Vector.<DisplayObject>();
+		//var currentFlashChildren:Vector.<DisplayObject> = new Vector.<DisplayObject>();
 		var num:int = container.numChildren;
 		
 		for (var i:int = 0; i < num; i++)
 		{
 			var child:DisplayObject = container.getChildAt(i);
-			currentFlashChildren.push(child);
+			//currentFlashChildren.push(child);
 			
 			// 访问 Watcher 的 nodeMap
 			var childNode:Node = _watcher.nodeMap[child];
@@ -138,17 +138,16 @@ public class Scanner
 			for (var j:int = parentNode.children.length - 1; j >= 0; j--)
 			{
 				var existingNode:Node = parentNode.children[j];
-				if (currentFlashChildren.indexOf(existingNode.source) == -1)
+				if (!existingNode.source || existingNode.source.parent != container)
 				{
 					if(Config.TRACE_WATCHER) trace("[FSE Watcher] ➖ 移除对象: " + existingNode.getName());
 					
-					if (_watcher.controller)
+					if (_watcher.controller && existingNode.source is MovieClip)
 					{
 						_watcher.controller.unregister(existingNode.source as MovieClip);
 					}
 					
 					existingNode.dispose();
-					// 从 Watcher 的 map 中移除
 					_watcher.deleteNodeFromMap(existingNode.source);
 					parentNode.children.splice(j, 1);
 				}

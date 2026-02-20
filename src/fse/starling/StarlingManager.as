@@ -37,6 +37,9 @@
 		private var _starlingUserRootFront:Sprite;
 		private var _starlingUserRootBack:Sprite;
 		private var _viewKeyMap:Dictionary;
+		// [新增] 对象池
+		private var _imagePool:Vector.<Image> = new Vector.<Image>();
+		private var _spritePool:Vector.<Sprite> = new Vector.<Sprite>();
 		
 		// [新增] 存储视图对象的逻辑层级值 (View -> int)
         private var _viewZIndexMap:Dictionary; 
@@ -147,101 +150,145 @@
         /**
          * [工厂模式] 创建 Starling 视图并绑定到 Node
          */
-        private function createViewForNode(node:Node):void
-        {
-			// [关键逻辑] 如果 Starling 还没好，先加入等待队列，然后直接返回
-			//node.enableCache=false;
+		private function createViewForNode(node:Node):void
+		{
 			if (!_isReady)
 			{
 				_pendingNodes.push(node);
 				return;
 			}
-            var view:DisplayObject;
-			//MD5.getMD5(Hash.getHashFromDisplayObject(a))
 			
-            // 1. 创建视图对象
-            if (node.bitmapData)
-            {
-                // 是叶子节点 (Shape/Bitmap/TextField) -> 创建 Image
-                // 此时 bitmapData 应该已经在 Node 构造函数里生成好了
-                var tex:Texture;
-				
-                // [逻辑分支]
-                if (node.enableCache)
-                {
-                    // 1. 正常流程：走缓存管理器
-                    var result:Object = CacheManager.instance.getTexture(node.bitmapData);
-                    tex = result.texture;
-                    
-                    // 绑定到 Image
-                    var img:Image = new Image(tex);
-                    view = img;
-                    
-                    // [记录] 这是一个缓存纹理，记录它的 Key
-                    _viewKeyMap[view] = result.key;
-                }
-                else
-                {
-                    // 2. 特例流程：强制新建，不入库
-                    if(Config.TRACE_CACHE)trace("[StarlingManager] ⚠️ 特例对象，跳过缓存: " + node.getName());
-                    tex = Texture.fromBitmapData(node.bitmapData, false);
-                    view = new Image(tex);
-                    // 显式不记录 Key (或者 delete)，表示这是私有纹理
-                    delete _viewKeyMap[view];
-                }
-				(view as Image).pivotX = node.pivotX;
-				(view as Image).pivotY = node.pivotY;
-				
-				(view as Image).textureSmoothing = Config.TEXTURE_SMOOTHING;
-            }
-            else
-            {
-                // 是容器节点 (MovieClip/Sprite) -> 创建 Sprite
-                view = new Sprite();
-            }
-		
-            // 2. 双向绑定
-            node.renderer = view;        // 让 Node 持有 Starling 对象 (用于 dispose)
-            node.onUpdate = onNodeUpdate; // 让 Node 能回调 Manager (用于 sync)
-            node.onDisposeRenderer = onNodeDisposeRenderer;// 让Node 能回调清理函数
+			var view:DisplayObject;
 			
-			// 初始化 Z-Index (默认为 0 或者 node 当前的 index)
-            _viewZIndexMap[view] = node.childIndex;
-            // 3. 初始属性同步 (确保刚创建出来位置就是对的)
-            syncTransform(node, view);
-			syncFilters(node, view);
-            // 4. 构建层级树 (挂载到父节点)
-            if (node.parentNode && node.parentNode.renderer)
-            {
-                var parentView:Sprite = node.parentNode.renderer as Sprite;
-                parentView.addChild(view);
-				// [新增] 新加入子对象，标记父容器需要排序
-                markParentDirty(parentView);
-            }
-            else
-            {
-                // 没有父节点，说明是根对象，直接上舞台
-                _rootLayer.addChild(view);
-				// 根容器也可能需要排序
-                markParentDirty(_rootLayer);
-            }
-        }
+			if (node.bitmapData)
+			{
+				var tex:Texture;
+				var result:Object = null;
+				
+				if (node.enableCache)
+				{
+					result = CacheManager.instance.getTexture(node.bitmapData);
+					if (result) tex = result.texture; // 防御 CacheManager 异常
+				}
+				else
+				{
+					tex = Texture.fromBitmapData(node.bitmapData, false);
+				}
+				
+				var img:Image;
+				if (_imagePool.length > 0) {
+					img = _imagePool.pop();
+					img.texture = tex;
+					if (tex) img.readjustSize(); // 🚀 防御 #1009: 只有纹理有效才重置尺寸
+				} else {
+					img = new Image(tex);
+				}
+				view = img;
+				
+				if (node.enableCache && result) {
+					_viewKeyMap[view] = result.key;
+				} else {
+					_viewKeyMap[view] = null;
+				}
+				
+				img.pivotX = node.pivotX;
+				img.pivotY = node.pivotY;
+				img.textureSmoothing = Config.TEXTURE_SMOOTHING;
+			}
+			else
+			{
+				if (_spritePool.length > 0) {
+					view = _spritePool.pop();
+				} else {
+					view = new Sprite();
+				}
+			}
+			
+			node.renderer = view;
+			node.onUpdate = onNodeUpdate;
+			node.onDisposeRenderer = onNodeDisposeRenderer;
+			
+			_viewZIndexMap[view] = node.childIndex;
+			
+			syncTransform(node, view);
+			
+			if (node.source && node.source.filters && node.source.filters.length > 0) {
+				syncFilters(node, view);
+			}
+			
+			// 🚀 防御 #1009: 确保父节点强转 Sprite 安全
+			if (node.parentNode && node.parentNode.renderer)
+			{
+				var parentView:starling.display.Sprite = node.parentNode.renderer as starling.display.Sprite;
+				if (parentView) {
+					parentView.addChild(view);
+					markParentDirty(parentView);
+				} else {
+					// 如果强转失败(异常情况)，安全降级到根舞台
+					if (_rootLayer) {
+						_rootLayer.addChild(view);
+						markParentDirty(_rootLayer);
+					}
+				}
+			}
+			else
+			{
+				if (_rootLayer) {
+					_rootLayer.addChild(view);
+					markParentDirty(_rootLayer);
+				}
+			}
+		}
 	
 		// 新增清理函数
 		private function onNodeDisposeRenderer(node:Node):void
 		{
 			var view:DisplayObject = node.renderer as DisplayObject;
-			// [新增] 清理排序数据
-            if (view) {
-                delete _viewZIndexMap[view];
-                // 如果父容器还在，可能需要移除标记(或不处理，Starling会自动移除child)
-            }
-			if (view && _viewKeyMap[view])
+			if (!view) return;
+			
+			// 清理排序数据
+			delete _viewZIndexMap[view];
+			
+			// 处理纹理释放
+			if (_viewKeyMap[view])
 			{
 				var key:String = _viewKeyMap[view];
-				setTimeout(delTex,1000,node.getName(),key);
+				setTimeout(delTex, 1000, node.getName(), key);
 				delete _viewKeyMap[view];
-				
+			}
+			else if (view is Image)
+			{
+				// 如果没有 Key (比如 enableCache=false 的粒子)，说明纹理是私有的，直接销毁纹理防止显存泄漏
+				var imgView:Image = view as Image;
+				if (imgView.texture) {
+					imgView.texture.dispose();
+				}
+			}
+			
+			// --- [核心] 洗净并回收到池子 ---
+			// 恢复默认属性，防止下一个使用者拿到脏数据
+			view.alpha = 1.0;
+			view.rotation = 0.0;
+			view.scaleX = 1.0;
+			view.scaleY = 1.0;
+			view.x = 0;
+			view.y = 0;
+			
+			if (view.filter) {
+				view.filter.dispose();
+				view.filter = null;
+			}
+			
+			// 从显示列表移除 (确保 Node.as 里的 removeFromParent 传的是 false)
+			view.removeFromParent();
+			
+			// 入池
+			if (view is Image) {
+				(view as Image).texture = null; // 解除纹理引用
+				_imagePool.push(view as Image);
+			} else if (view is Sprite) {
+				(view as Sprite).removeChildren(); // 清空子对象引用
+				_spritePool.push(view as Sprite);
 			}
 		}
 		private function delTex(nodeName:String,key:String){
@@ -398,29 +445,33 @@
         /**
          * 同步基础变换属性 (x, y, scale, rotation, alpha, visible)
          */
-        private function syncTransform(node:Node, view:DisplayObject):void
-        {
-            // 直接从 Flash 源对象读取最新值
-            // 如果担心线程问题，也可以读取 node._lastX 等私有变量(需改为public)
-			if(!node.source)return;
+		private function syncTransform(node:Node, view:DisplayObject):void
+		{
+			if(!node.source) return;
 			view.x = node.source.x;
-            view.y = node.source.y;
-            view.rotation = deg2rad(node.source.rotation);
-            view.alpha = node.source.alpha;
+			view.y = node.source.y;
+			view.rotation = deg2rad(node.source.rotation);
+			view.alpha = node.source.alpha;
+			
 			if(node.source is flash.display.DisplayObjectContainer){
 				view.scaleX = node.source.scaleX;
 				view.scaleY = node.source.scaleY;
 			}else{
-				view.width = node.source.width;
-				view.height = node.source.height;
+				// 🚀 防御 #1009: 如果是 Image 且纹理丢失，禁止修改 width/height，改用 scale
+				if (view is Image && (view as Image).texture == null) {
+					view.scaleX = node.source.scaleX;
+					view.scaleY = node.source.scaleY;
+				} else {
+					view.width = node.source.width;
+					view.height = node.source.height;
+				}
 			}
-            // 使用 Node 的逻辑可见性 (由 Controller 控制)
-		
-            view.visible = node.getLogicalVisible();
+			view.visible = node.getLogicalVisible();
 			if(FSE_Manager.keyRole == node.source.name){
-				kernel.starlingHelpDraw();
+				// 防御内核未初始化
+				if (kernel) kernel.starlingHelpDraw();
 			}
-        }
+		}
         
         /**
          * 同步纹理 (用于 TextField 变化或 Shape 重绘)

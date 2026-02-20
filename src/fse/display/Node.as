@@ -265,6 +265,7 @@ import fse.utils.MD5;
 			// --- [新增] 滤镜变化检查 ---
 			// 只有当对象是非容器(Shape/Bitmap) 或者 容器确实有滤镜时才检查
 			// 为了性能，如果 source.filters 为空且 _lastFilterSig 为空，则快速跳过
+			
 			var currentFilters:Array = source.filters;
 			if (currentFilters.length > 0 || _lastFilterSig != "")
 			{
@@ -281,8 +282,8 @@ import fse.utils.MD5;
 			// ⚠️ 警告：如果 Controller 强制隐藏了 Flash 对象，这里会检测到 visible=false
 			// 导致 Starling 对象也隐藏。
 			if (getLogicalVisible() != _lastVisible)
-			{ 
-				changes.push("visible"); 
+			{
+				changes.push("visible");
 				isChanged = true;
 			}
 			
@@ -502,7 +503,7 @@ import fse.utils.MD5;
 			
                 if (renderer.hasOwnProperty("dispose"))
                 {
-					renderer["removeFromParent"](true); // 从 Starling 舞台移除并 dispose
+					renderer["removeFromParent"](false); // 从 Starling 舞台移除并 dispose
 					// 或者直接 renderer["dispose"](); 视你的 Starling 版本而定
                 }
                 renderer = null;
