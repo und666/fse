@@ -1,66 +1,69 @@
 <div align="center">
 
-# FSE (Flash Starling Enhance) 混合渲染框架
+# FSE (Flash Starling Enhance) Hybrid Rendering Framework
 
-**FSE是一个用于Flash AS3的轻量GPU混合渲染框架。旨在使用传统Flash开发方法快速构建能够与Unity体验相近的2D高帧率应用。**
+**A lightweight GPU hybrid rendering framework for Flash AS3. It aims to quickly build 2D high-frame-rate applications with an experience close to Unity using traditional Flash development methods.**
 
 [![GitHub stars](https://img.shields.io/github/stars/und666/FlashStarlingEnhance?style=social)](https://github.com/und666/FlashStarlingEnhance/stargazers)
 ![visitors](https://visitor-badge.laobi.icu/badge?page_id=FlashStarlingEnhance&left_color=green&right_color=red)
 
 
-github: https://github.com/und666/FlashStarlingEnhance
+https://github.com/user-attachments/assets/65afb2fe-926f-4096-930b-0b4742105d73
 
 
 </div>
 
-## 特点
 
-- 快速开始,与传统AS3项目对接
-- 不同写Starling代码即可轻松创建Starling项目
-- 适用于个人级别轻量化富位图的高帧率GPU项目快速开发
-- 支持传统Flash的窗口自适应策略
-- 支持传统发光，模糊，投影滤镜
+**Features**
 
-## 碎碎念
+- Quick start, integrates with traditional AS3 projects.
+- Easily create Starling projects without writing Starling code.
+- Suitable for rapid development of personal-level, lightweight high-frame-rate GPU projects with rich bitmaps.
+- Supports traditional Flash window adaptive strategies.
+- Supports traditional filters like glow, blur, and drop shadow.
 
-- 今夕是何年？没错，现在是2026年，距离Flash技术正式退出历史舞台已有五年之久。正是在这样的时间点上，FSE（Flash Starling Enhance）混合渲染框架如一次跨越时空的技术“回响”，悄然诞生。
-  
-- 我是一名来自中国的热爱独立游戏创作的大三学生，正在逐步向Unity技术栈转型。今年恰是我接触ActionScript 3.0开发的第十年。这些年间，我始终怀有一种愧疚——虽对这一技术有了相当地了解，却未曾用它创作出什么令人瞩目的作品。
+**Author's Notes**
 
-- 前段时间，我沉浸于Starling Wiki和GitHub中大量关于Starling框架的资料，同时也陷入了某种瓶颈。我逐渐意识到，在如今的环境中用Flash做出优秀作品实属不易。但作为一个Aser，我仍想为年轻的自己、也为这段技术旅程画上一个更完整的句点。
+- What year is it? That's right, it's 2026, five years since Flash technology officially exited the stage. It is precisely at this point in time that the FSE (Flash Starling Enhance) hybrid rendering framework is born, like a technological "echo" across time and space.
 
-- 有时候，我们需要寻找一种方式与自己和解，不是吗？这个框架便是我的答案。
+- I am a junior from China who loves indie game creation and is gradually transitioning to the Unity tech stack. This year marks my tenth year of working with ActionScript 3.0 development. Throughout these years, I have always carried a sense of regret—despite having a considerable understanding of this technology, I have never created anything remarkable with it.
 
-- **好吧，用白话说：这个框架只是我本人以学习为目的开发,欢迎学习讨论。**
+- Recently, I immersed myself in the Starling Wiki and numerous resources about the Starling framework on GitHub, while also hitting a bottleneck. I gradually realized that creating outstanding work with Flash in today's environment is quite challenging. But as an Ascr, I still want to draw a more complete conclusion for my younger self and for this technological journey.
 
-## 前言
-  如果你是一位资深的Flash开发工程师，那么你大概率了解过Adobe AIR SDK的GPU模式\
-  我先简单介绍一个这个模式，在AIR for Android/AIR for IOS配置中,GPU设置是可用的\
-  选择了这个模式以后确实可以让整个画面看起来更流畅，但帧率依然只能限制在60FPS，以及滤镜等一些功能存在兼容性BUG\
-  对于AIR for Desktop，GPU模式竟然直接被隐藏了，据小道消息貌似是Adobe推行了一半但因为很多兼容性BUG所以放弃推行了。\
-  并且在传统的Flash IDE的导出设置里是没有这个模式选择的
+- Sometimes, we need to find a way to make peace with ourselves, don't we? This framework is my answer.
 
-  -------------------可爱的分界线----------------------\
-  \
-  那么作为一个Aser，要快速构建高性能高帧率的Flash应用，我们常常会遇到这些问题。\
-  **Flash IDEA开发**的传统应用体验不佳{**帧率限制60，帧率不稳定**,**大分辨率场景位图移动直接跳帧**} \
-  而转向**Starling 框架** 后，性能虽然上来了，但制作动画却变得异常棘手——**缺乏成熟、可视化的动画解决方案**，这几乎是致命的短板。\
-  那有没有一种可能，在制作个人级别的**手机、桌面应用或是游戏**时能够兼顾**GPU的高帧渲染效率**，又能够享受到**Flash IDE现有的动画方案**呢？\
-  答案：有的兄弟，有的~ **FSE正式进入舞台(一语双关)**
+- **Alright, to put it plainly: This framework is developed by me for learning purposes. Discussion and learning are welcome.**
 
-## 开始指南
-**1. 首先，准备好FSE框架**
-- 一共包含3个文件
+**Foreword**
+
+If you are a seasoned Flash development engineer, you are probably familiar with the GPU mode of the Adobe AIR SDK.
+Let me briefly introduce this mode. In AIR for Android/AIR for iOS configurations, the GPU setting is available.
+Enabling this mode can indeed make the entire screen appear smoother, but the frame rate is still limited to 60 FPS, and there are compatibility bugs with some features like filters.
+For AIR for Desktop, the GPU mode is actually hidden. According to rumors, Adobe pushed it halfway but abandoned it due to many compatibility bugs.
+Moreover, this mode is not available in the export settings of the traditional Flash IDE.
+
+\------------------ Cute Dividing Line ------------------
+
+So, as an Ascr, when quickly building high-performance, high-frame-rate Flash applications, we often encounter these issues.
+**Flash IDE development** for traditional applications offers a poor experience {**frame rate capped at 60, unstable frame rate**, **large-resolution scene bitmap movement causing direct frame skips**}.
+After switching to the **Starling framework**, performance improves, but creating animations becomes exceptionally tricky—**lack of mature, visual animation solutions** is almost a fatal shortcoming.
+Is it possible to balance **GPU's high-frame rendering efficiency** with **Flash IDE's existing animation solutions** when developing personal-level **mobile, desktop applications, or games**?
+Answer: Yes, brother, yes~ **FSE officially enters the stage (a pun)**.
+
+**Getting Started Guide**
+
+**1. First, prepare the FSE framework.**
+- It consists of 3 files in total.
   ```
   fse
   starling
   fse.as
-  (注意,这个starling包是经过我调整过的,与官方版本starling不兼容)
-  (fse.as这个文件是FSE.as的快捷入口文件)
+  (Note: This starling package has been adjusted by me and is not compatible with the official Starling version.)
+  (The fse.as file is a quick entry file for FSE.as.)
   ```
-\
-**2. 将FSE框架复制到你的项目中**
-- Flash IDE工程中
+
+**2. Copy the FSE framework into your project.**
+- In a Flash IDE project:
   ```
   /your_project_path
   ===========================
@@ -70,9 +73,9 @@ github: https://github.com/und666/FlashStarlingEnhance
   ===========================
   xxx.fla
   xxx.swf
-  ``` 
+  ```
 
-- IDEA/FB/FD工程中
+- In IDEA/FB/FD projects:
   ```
   /your_project_path/src
   ===========================
@@ -82,29 +85,29 @@ github: https://github.com/und666/FlashStarlingEnhance
   ===========================
   YourMainClass.as
   ```
-\
-**3. 在你的项目中注入Starling框架。**
-- Flash IDE工程中
+
+**3. Inject the Starling framework into your project.**
+- In a Flash IDE project:
   ```haxe
-  //在舞台根目录第一帧上
+  // On the first frame of the stage root directory.
   import fse.core.FSE;
-  FSE.init(stage,this);
-  //这两行等效于
-  fse.init(stage,this);
-  
-  //请确保你给出的第二个参数为舞台容器剪辑根
+  FSE.init(stage, this);
+  // These two lines are equivalent to:
+  fse.init(stage, this);
+
+  // Please ensure the second parameter you provide is the root of the stage container clip.
   ```
 
-- IDEA/FB/FD工程中
+- In IDEA/FB/FD projects:
   ```haxe
-  //在你的类文件中
+  // In your class file.
   package {
       import flash.display.Sprite;
       import flash.events.Event;
       import fse.core.FSE;
 
       public class Main extends Sprite {
-          
+
           public function Main() {
              if (stage) {
                  onAddedToStage();
@@ -114,289 +117,291 @@ github: https://github.com/und666/FlashStarlingEnhance
           }
           private function onAddedToStage(event:Event = null):void {
             removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-            FSE.init(stage,this);
-            //你的代码
+            FSE.init(stage, this);
+            // Your code.
           }
       }
   }
   ```
 
-## API
-- **特性**
-  - FSE接管后所有MovieClip都会默认强制暂停播放
-  - 播放由FSE内置的动画管理器驱动
-  - 默认情况下，FSE会自动管理所有MovieClip的播放，但你可以通过以下方式来手动控制播放
+**API**
 
-- **常用API**
+- **Features**
+  - After FSE takes over, all MovieClips will be forced to pause playback by default.
+  - Playback is driven by FSE's built-in animation manager.
+  - By default, FSE automatically manages the playback of all MovieClips, but you can manually control playback using the following methods.
+
+- **Common APIs**
   ```haxe
-  //=====初始化================================================================
+  //===== Initialization ================================================================
 
-  fse.init(stage,Object(root));
-  //常规初始化
+  fse.init(stage, Object(root));
+  // Regular initialization.
 
-  fse.init(stage,Object(root),false);
-  //特殊初始化，不进行GPU渲染，只提帧并接管动画系统
+  fse.init(stage, Object(root), false);
+  // Special initialization: does not perform GPU rendering, only boosts frame rate and takes over the animation system.
 
 
-  //=====动画控制================================================================
+  //===== Animation Control =============================================================
 
   mc.play();
-  //必须改写成
+  // Must be rewritten as:
   fse.play(mc);
-  //播放动画
+  // Play animation.
 
   mc.stop();
-  //必须改写成
+  // Must be rewritten as:
   fse.stop(mc);
-  //停止播放动画
+  // Stop animation.
 
   mc.gotoAndStop(index);
-  //必须改写成
-  fse.gotoAndStop(mc,index);
-  //跳转到指定帧
+  // Must be rewritten as:
+  fse.gotoAndStop(mc, index);
+  // Jump to a specified frame.
 
   mc.gotoAndPlay(index);
-  //必须改写成
-  fse.gotoAndPlay(mc,index);
-  //跳转到指定帧并播放
+  // Must be rewritten as:
+  fse.gotoAndPlay(mc, index);
+  // Jump to a specified frame and play.
 
   var v:Boolean = mc.visible;
-  //必须改写成
+  // Must be rewritten as:
   var v:Boolean = fse.getVisible(mc);
-  //获取MovieClip对象可见性
-  
-  mc.visible=false;
-  //必须改写成
-  fse.visible(mc,false);
-  //改变MovieClip对象可见性
-  
-  //=====循环控制================================================================
-  
-  //高频循环 (在240帧的情况下每秒刷新240次)
-  
-  //开启
-  mc.addEventListener(Event.ENTER_FRAME,Update);
-  
-  //关闭
-  mc.removeEventListener(Event.ENTER_FRAME,Update);
-  
-  
-  //低频循环 (无论在什么情况下都以60次每秒运行[频率在Config.as中可调])
-  
-  //开启
-  fse.addEventListener(mc,FSE_Event.FIX_ENTER_FRAME,Update);
-  fse.addLoop(mc,Update);
+  // Get MovieClip object visibility.
+
+  mc.visible = false;
+  // Must be rewritten as:
+  fse.visible(mc, false);
+  // Change MovieClip object visibility.
+
+  //===== Loop Control =================================================================
+
+  // High-frequency loop (refreshes 240 times per second at 240 FPS).
+
+  // Start:
+  mc.addEventListener(Event.ENTER_FRAME, Update);
+
+  // Stop:
+  mc.removeEventListener(Event.ENTER_FRAME, Update);
+
+
+  // Low-frequency loop (runs at 60 times per second regardless of situation [frequency adjustable in Config.as]).
+
+  // Start:
+  fse.addEventListener(mc, FSE_Event.FIX_ENTER_FRAME, Update);
+  fse.addLoop(mc, Update);
   fse.loop(Update);
-  //3句等效
-  
-  //关闭
-  fse.removeEventListener(mc,FSE_Event.FIX_ENTER_FRAME,Update);
-  fse.removeLoop(mc,Update);
+  // The above 3 lines are equivalent.
+
+  // Stop:
+  fse.removeEventListener(mc, FSE_Event.FIX_ENTER_FRAME, Update);
+  fse.removeLoop(mc, Update);
   fse.stopLoop(Update);
-  //3句等效
-  ```
-- **层级 “三明治” 问题**
-  ```
-    在 Flash Player / AIR 的运行时架构中：
-    顶层 (Top): 原生 Display List (CPU)。
-    底层 (Bottom): Stage3D (GPU/Starling)。
-    视频层: StageVideo (如果有的话，通常在最最底层)。
-
-    所以FSE框架的实现在此基础上将Stage3D层分成了3层
-    每一层级都是一个starling.display.Sprite容器
-
-    在舞台的第1层，也就是最底层，会有一层底层用户操作层，使用fse.starlingRootBack进行访问
-    在舞台的第2层，就是最核心的映射层，fse框架会将你的舞台结构映射到此层
-    在舞台的第3层，会有一层底层用户操作层，使用fse.starlingRoot进行访问
-    在CPU渲染层，也就是最顶层，因为CPU层覆盖在GPU渲染层之上，一些存在兼容性问题的元件可以使用cpu层来进行渲染
+  // The above 3 lines are equivalent.
   ```
 
-- **高级API**
+- **Layer "Sandwich" Issue**
+  ```
+    In the runtime architecture of Flash Player / AIR:
+    Top Layer: Native Display List (CPU).
+    Bottom Layer: Stage3D (GPU/Starling).
+    Video Layer: StageVideo (if present, usually at the very bottom).
+
+    Therefore, based on this, the FSE framework divides the Stage3D layer into 3 layers.
+    Each layer is a starling.display.Sprite container.
+
+    On the 1st layer of the stage, the bottommost layer, there is a back user operation layer, accessible via fse.starlingRootBack.
+    On the 2nd layer of the stage, the core mapping layer, the FSE framework maps your stage structure to this layer.
+    On the 3rd layer of the stage, there is a front user operation layer, accessible via fse.starlingRoot.
+    On the CPU rendering layer, the topmost layer, because the CPU layer covers the GPU rendering layer, elements with compatibility issues can be rendered using the CPU layer.
+  ```
+
+- **Advanced APIs**
   ```haxe
   fse.cpu(mc:MovieClip);
-  fse.ban(mc:MovieClip); //与上一行等效
-  fse.isIgnore(mc:MovieClip):Boolean //获取mc对象的特例状态
-  //使用cpu渲染
+  fse.ban(mc:MovieClip); // Equivalent to the line above.
+  fse.isIgnore(mc:MovieClip):Boolean // Get the special status of the mc object.
+  // Use CPU rendering.
   /*
-	  为了解决某些兼容性问题,
-	  被用户标记的剪辑将不会在FSE的Starling舞台上被渲染,而是直接在传统舞台上渲染
-	  注意，这么做会导致mc始终显示在GPU层的上方
+      To solve certain compatibility issues,
+      clips marked by the user will not be rendered on FSE's Starling stage but will be rendered directly on the traditional stage.
+      Note: Doing so will cause the mc to always appear above the GPU layer.
   */
-  
+
 
 
   fse.setKeyRole(mc:MovieClip);
-  //将当前的影片剪辑设置为关键角色
+  // Set the current movie clip as a key role.
   fse.getKeyRole():String
-  //获取设置过的关键角色
+  // Get the set key role.
   /*
-	  fse框架允许用户注册一个关键角色剪辑,一旦这个剪辑产生变化Starling马上渲染下一帧
-	  这个方法一般应用与哪些与玩家输入操作相关的剪辑,比如鼠标跟随,键盘控制移动等
-	  用于实现用户一输入就马上相应的效果
+      The FSE framework allows users to register a key role clip. Once this clip changes, Starling immediately renders the next frame.
+      This method is generally applied to clips related to player input operations, such as mouse following, keyboard-controlled movement, etc.,
+      to achieve immediate response upon user input.
   */
-  
 
 
-  fse.setNodeCached(mc:MovieClip,v:Boolean);
-  //设置缓存特例
+
+  fse.setNodeCached(mc:MovieClip, v:Boolean);
+  // Set caching exception.
   /*
-	  设置特例后，这个对象的以及当前容器节点的所有肉子节点(Bitmap、Shape)都不参与缓存系统
+      After setting an exception, this object and all child nodes (Bitmap, Shape) of the current container node do not participate in the caching system.
   */
-  
 
 
 
   fse.gpuClear();
-  //强制清楚缓存面板上的所有缓存
-  
+  // Force clear all caches on the cache panel.
 
 
 
-  //=====与Starling混用============================================================
-  fse.starlingRoot:starling.display.Sprite
-  //为用户提供的Starling舞台根容器顶层(推荐用于添加粒子效果以及特效)
+  //===== Mixing with Starling ==========================================================
+  fse.starlingRoot: starling.display.Sprite
+  // Top-level Starling stage root container provided for users (recommended for adding particle effects and special effects).
 
-  fse.starlingRootBack:starling.display.Sprite
-  //为用户提供的Starling舞台根容器底层(推荐用于添加背景等底层内容元件)
+  fse.starlingRootBack: starling.display.Sprite
+  // Bottom-level Starling stage root container provided for users (recommended for adding background and other low-level content elements).
 
   ```
 
-## Config.as
-```
+**Config.as**
+```haxe
 package fse.conf
 {
-	import flash.system.Capabilities;
-	import flash.text.TextField;
-	import flash.text.TextFieldType;
-	import flash.display.DisplayObject;
-	import flash.display.SimpleButton;
-	
-	import starling.textures.TextureSmoothing;
-	
+    import flash.system.Capabilities;
+    import flash.text.TextField;
+    import flash.text.TextFieldType;
+    import flash.display.DisplayObject;
+    import flash.display.SimpleButton;
+
+    import starling.textures.TextureSmoothing;
+
     /**
-     * FSE 全局配置类
-     * 用于统一管理逻辑帧率、渲染精度等静态参数
+     * FSE Global Configuration Class
+     * Used to uniformly manage static parameters like logic frame rate and rendering precision.
      */
     public class Config
     {
-		
-		// -------------------------------------------------
-		// 舞台显示相关(Stage Display)
-		// -------------------------------------------------
-		public static const DEVICE_W:uint = Capabilities.screenResolutionX; //设备窗口大小
-		public static const DEVICE_H:uint = Capabilities.screenResolutionY;
-		
-		public static const FULL_SCREEN:Boolean = false;
-		public static var AUTO_ADAPT:String = "AUTO"; //舞台自适应方案
-		// ***可选项
-		//"FULL" 填满视窗适配，无论如何填满视窗（不保证舞台比例）
-		//"SYN_HEIGHT" 舞台画面紧贴屏幕上下两边，并保证舞台比例
-		//"SYN_WIDTH"舞台画面紧贴屏幕左右两边，并保证舞台比例
-		// "AUTO" 缩放边界自动决定，始终保持舞台比例
-		// "NONE" 框架不干预适配行为，但依然会控制渲染窗口和舞台高宽同步（我也不知道这个选项有什么用）
-		
-		
-		//舞台对齐，除非有特殊开发需要不然一般不修改此项设置
-		//特殊说明，如果舞台自适应方案与此项冲突，则此项设置无效（比如你的舞台始终紧贴左右两边，那你又设置了左对齐，那就失去意义了）
-		public static var ALIGN_X:String = "CENTER";
-		// ***可选项
-		//"CENTER" 锚定屏幕中央位置，这是最推荐的设置
-		//"LEFT" 紧贴屏幕左侧
-		//"RIGHT" 紧贴屏幕右侧
-		
-		
-		public static var ALIGN_Y:String = "CENTER";
-		// ***可选项
-		//"CENTER" 锚定屏幕中央位置，这是最推荐的设置
-		//"TOP" 紧贴屏幕上侧
-		//"BOTTOM" 紧贴屏幕下侧
-		
-		
-		public static const BG_COLOR:uint=0x211F20; //背景颜色
-	
-		public static const EXT_FPS:uint=400; //Starling 最高帧限(通常设置为超过大多数屏幕刷新率)
-		
-		
-		
-		// -------------------------------------------------
-		// 画面配置相关(Quality)
-		// -------------------------------------------------
-		public static var TEXTURE_SMOOTHING:String = TextureSmoothing.BILINEAR; //纹理平滑设置
-		// ***可选项
-		//TextureSmoothing.NONE (不平滑/最近邻插值) ###如果你的游戏的像素风格游戏推荐使用这个选项
-		//TextureSmoothing.BILINEAR (双线性过滤 - 默认值)
-		//TextureSmoothing.TRILINEAR (三线性过滤)
-		
-		
-		
-		// -------------------------------------------------
-		// 缓存策略相关(Cache)
-		// -------------------------------------------------
-		public static const CACHE_THRESHOLD:uint = 3; //持久化阈值：如果场景同时出现超过这个数的同样纹理，那么这个纹理将被持久化存入缓存
-		public static const WATCHER_COLD_TIME:uint = 20;
-		
-		
-		// -------------------------------------------------
-		// 调试相关(Debug)
-		// -------------------------------------------------
-		public static const TRACE_CORE:Boolean = false; //无关紧要的一些启动信息
-		public static const TRACE_DEBUG:Boolean = true; //Starling GPU性能信息
-		public static const TRACE_WATCHER:Boolean = false; //节点数监控调试信息
-		public static const TRACE_NODE:Boolean = false; //单个节点行为调试信息
-		public static const TRACE_CACHE:Boolean = false; //缓存器信息
-		
+
+        // -------------------------------------------------
+        // Stage Display Related
+        // -------------------------------------------------
+        public static const DEVICE_W:uint = Capabilities.screenResolutionX; // Device window size.
+        public static const DEVICE_H:uint = Capabilities.screenResolutionY;
+
+        public static const FULL_SCREEN:Boolean = false;
+        public static var AUTO_ADAPT:String = "AUTO"; // Stage adaptive strategy.
+        // ***Options:
+        //"FULL" Fill window adaptation, fills the window regardless (does not guarantee stage ratio).
+        //"SYN_HEIGHT" Stage image snug against top and bottom of the screen, maintaining stage ratio.
+        //"SYN_WIDTH" Stage image snug against left and right sides of the screen, maintaining stage ratio.
+        // "AUTO" Scaling boundary automatically decided, always maintains stage ratio.
+        // "NONE" Framework does not interfere with adaptation behavior, but still controls rendering window and stage width/height synchronization (I'm not sure what this option is for either).
+
+
+        // Stage alignment. Generally, do not modify this setting unless for special development needs.
+        // Special note: If the stage adaptive strategy conflicts with this setting, this setting is invalid (e.g., if your stage is always snug against the left and right sides, setting left alignment loses meaning).
+        public static var ALIGN_X:String = "CENTER";
+        // ***Options:
+        //"CENTER" Anchor to the center of the screen. This is the most recommended setting.
+        //"LEFT" Snug against the left side of the screen.
+        //"RIGHT" Snug against the right side of the screen.
+
+
+        public static var ALIGN_Y:String = "CENTER";
+        // ***Options:
+        //"CENTER" Anchor to the center of the screen. This is the most recommended setting.
+        //"TOP" Snug against the top of the screen.
+        //"BOTTOM" Snug against the bottom of the screen.
+
+
+        public static const BG_COLOR:uint = 0x211F20; // Background color.
+
+        public static const EXT_FPS:uint = 400; // Starling maximum frame limit (usually set higher than most screen refresh rates).
+
+
+
+        // -------------------------------------------------
+        // Graphics Configuration Related (Quality)
+        // -------------------------------------------------
+        public static var TEXTURE_SMOOTHING:String = TextureSmoothing.BILINEAR; // Texture smoothing setting.
+        // ***Options:
+        //TextureSmoothing.NONE (No smoothing / nearest-neighbor interpolation) ### Recommended for pixel art style games.
+        //TextureSmoothing.BILINEAR (Bilinear filtering - default).
+        //TextureSmoothing.TRILINEAR (Trilinear filtering).
+
+
+
+        // -------------------------------------------------
+        // Cache Policy Related
+        // -------------------------------------------------
+        public static const CACHE_THRESHOLD:uint = 3; // Persistence threshold: If more than this number of identical textures appear simultaneously in the scene, the texture will be persisted in the cache.
+        public static const WATCHER_COLD_TIME:uint = 20;
+
+
+        // -------------------------------------------------
+        // Debug Related
+        // -------------------------------------------------
+        public static const TRACE_CORE:Boolean = false; // Some non-critical startup information.
+        public static const TRACE_DEBUG:Boolean = true; // Starling GPU performance information.
+        public static const TRACE_WATCHER:Boolean = false; // Node count monitoring debug information.
+        public static const TRACE_NODE:Boolean = false; // Single node behavior debug information.
+        public static const TRACE_CACHE:Boolean = false; // Cache manager information.
+
         // ------------------------------------------------
-        // 游戏配置 (Game)
+        // Game Configuration
         // ------------------------------------------------
-		public static const STOP_ALL:Boolean = true; //在接管后默认暂停所有影片剪辑
-		
-        private static var _logicFrameRate:int = 60; //逻辑帧率
+        public static const STOP_ALL:Boolean = true; // Pause all movie clips by default after takeover.
+
+        private static var _logicFrameRate:int = 60; // Logic frame rate.
         private static var _logicTimestep:Number = 1000.0 / _logicFrameRate;
-        
-		private static var _case_render:Array = [isInputText,isSimpleButton]; //经过这些断言判断为真的话不用starling渲染
-		
-		//输入文本断言
-		private static function isInputText(obj:DisplayObject):Boolean {
-			if (obj is TextField) {
-				var textField:TextField = obj as TextField;
-				// TextFieldType.INPUT 是静态常量，值为 "input"
-				return textField.type == TextFieldType.INPUT;
-			}
-			return false;
-		}
-		
-		//按钮断言
-		private static function isSimpleButton(obj:*):Boolean{
-			// 检查是否为flash.display.SimpleButton实例
-			return obj is SimpleButton;
-		}
+
+        private static var _case_render:Array = [isInputText, isSimpleButton]; // If assertions pass, do not render with Starling.
+
+        // Input text assertion.
+        private static function isInputText(obj:DisplayObject):Boolean {
+            if (obj is TextField) {
+                var textField:TextField = obj as TextField;
+                // TextFieldType.INPUT is a static constant with value "input".
+                return textField.type == TextFieldType.INPUT;
+            }
+            return false;
+        }
+
+        // Button assertion.
+        private static function isSimpleButton(obj:*):Boolean{
+            // Check if it's an instance of flash.display.SimpleButton.
+            return obj is SimpleButton;
+        }
+
         // ------------------------------------------------
-        // 公共参数
+        // Public Parameters
         // ------------------------------------------------
-        
+
         /**
-         * 最大的追赶时间 (毫秒)
-         * 如果设备极度卡顿，每一帧最多只处理这么长时间的逻辑，防止死循环
-         * 默认 200ms (即最差情况每帧追赶约 12 个逻辑帧)
+         * Maximum catch-up time (milliseconds).
+         * If the device is extremely laggy, process only this much logic per frame at most to prevent infinite loops.
+         * Default 200ms (i.e., worst-case catching up about 12 logic frames per frame).
          */
         public static var maxAccumulator:Number = 200;
 
         /**
-         * 纹理缩放系数 (未来用于支持 Retina/高清屏)
-         * 1 = 原倍, 2 = 2倍高清
+         * Texture scaling factor (for future Retina/high-DPI screen support).
+         * 1 = original, 2 = 2x high-definition.
          */
         public static var contentScaleFactor:Number = 1.0;
 
         // ------------------------------------------------
         // Getter / Setter
         // ------------------------------------------------
-		
-		public static function get case_render():Array{
-			return _case_render;
-		}
+
+        public static function get case_render():Array{
+            return _case_render;
+        }
+
         /**
-         * 目标逻辑帧率 (默认为 60)
-         * 修改此值会自动更新 timestep
+         * Target logic frame rate (default 60).
+         * Modifying this value automatically updates timestep.
          */
         public static function get logicFrameRate():int
         {
@@ -405,18 +410,18 @@ package fse.conf
 
         public static function set logicFrameRate(value:int):void
         {
-            if (value < 1) value = 1; // 安全限制
+            if (value < 1) value = 1; // Safety limit.
             if (_logicFrameRate == value) return;
 
             _logicFrameRate = value;
             _logicTimestep = 1000.0 / _logicFrameRate;
-            
+
             trace("[FSE_Config] Logic FPS set to: " + _logicFrameRate + " (Timestep: " + _logicTimestep.toFixed(2) + "ms)");
         }
 
         /**
-         * [只读] 每一逻辑帧的时间步长 (毫秒)
-         * 例如 60fps = 16.666ms
+         * [Read-only] Time step per logic frame (milliseconds).
+         * e.g., 60fps = 16.666ms.
          */
         public static function get logicTimestep():Number
         {
@@ -425,88 +430,91 @@ package fse.conf
     }
 }
 ```
-## 注意事项
-- 如果你的项目中出现兼容性问题,请按需求添加渲染特例
 
-## 基本原理
-- 我们都知道，使用starling的flash项目,传统的cpu渲染会在starling的上层，并且一旦开始GPU渲染,flash项目帧限会从60fps到与刷新率同步例如,在400hz的电脑上可以跑到400fps
-  
-- 那么我们做一个游戏混合渲染方案
-  - 像**简单静态的内容**，比如高清背景图片等，或者简单移动的场景图片，我打算使用**starling进行渲染**。
-  - 如果**复杂的动态内容**，比如动画中右嵌套的动画，比如枪械开火动画绑定在人物手部动画上，那我们将使用传统的Flash cpu的方式渲染，但我们会将cpu渲染层所有的传统剪辑强制隐藏(visible=false)，只有当flash.display.movieclip更新（其中某个影片剪辑或者子剪辑的帧发生变化）后则更新draw出位图数据作为显示纹理，再由starling进行渲染。
-  
-- 那么到了这里肯定会有小朋友要问了
-  - “Starling框架不使用图集并高频率上传纹理不会导致性能爆炸吗？”
-  - “怎么说好呢，我们这个框架本来就不是用来开发专业应用的，对于个人级别的项目，如果您的游戏中能保证动态更新部分较少，并且能控制纹理大小（控制在几百像素以内），那么我认为不会影响性能
-  况且，我制作的框架具有一些性能优化算法，能解决一部分你的疑虑”
-   
-- 这么说来的话，我实际做的也就是这几件事情
-  -  **逻辑驱动控制**
-     -  比如一些预期的动画只能由60fps播放
-     -  一些逻辑代码只能以60fps执行
-     -  使用框架后的一切逻辑和动画都要由新的60帧逻辑驱动
-     -  不能因为主观设备（屏幕刷新率）的不同导致程序运行效果/动画效果有出入
-  
-  - **舞台监控**
-     -  对Flash传统Stage生成实时管理的场景结构树
-     -  场景树上的每一个节点对应着一个flash.display.DisplayObject对象，并存储他们的所有状态(例如currentFrame,visible,alpha,x,y,scaleX,scaleY,rotation等)，最关键的，**锚点信息**
-     -  对场景树进行遍历检查，并比对每个子剪辑是否发生变化，**变化分为两种**
-        -  **1. 形变（影片剪辑的帧数，子剪辑集合改变，内容改变等）**
-        -  **2. 属性值改变（transfer属性改变，同步数值即可）**
+**Notes**
 
-  - **Starling渲染**
-    - 对于flash传统stage生成实时管理的场景树，Starling舞台要实时同步场景树上影片剪辑发生的变化，同步到Starling舞台上
-    - 在同一父剪辑内的所有starling.display.DisplayObject对象的图层顺序可以按照传统剪辑同步过来的childrenIndex值按照大小进行显示图层排序
+- If compatibility issues arise in your project, add rendering exceptions as needed.
 
-  - **纹理缓存管理**
-    - 为了减少DrawCalls，本框架使用MaxRects算法进行二维空间uv装箱
-    - 对场景里的每帧/每个DisplayObject对象，都生成纹理相应的唯一哈希字符串
+**Basic Principles**
 
-  - **输入事件转发**
-    - 由于CPU层的所有内容被隐藏,这意味着注册在他们身上的鼠标点击事件都将失效
-    - 我设计的输入转发器可以转发鼠标输入事件到对应的flash.display.DisplayObject身上
+- We all know that in Flash projects using Starling, traditional CPU rendering is on a layer above Starling, and once GPU rendering starts, the Flash project frame limit increases from 60fps to match the refresh rate (e.g., can reach 400fps on a 400hz monitor).
 
-## 框架
-- 包类结构为
+- So, let's create a hybrid rendering solution for games:
+    - For **simple static content**, like high-resolution background images, or simply moving scene images, I plan to use **Starling for rendering**.
+    - For **complex dynamic content**, like animations nested within animations (e.g., a gun firing animation bound to a character's hand animation), we will use the traditional Flash CPU method for rendering. However, we will forcibly hide all traditional clips on the CPU rendering layer (visible=false). Only when a flash.display.MovieClip updates (i.e., a frame change in the movie clip or its sub-clips) will we update and draw the bitmap data as a display texture, which is then rendered by Starling.
+
+- At this point, some might ask:
+    - "Won't the Starling framework cause performance explosions if it doesn't use texture atlases and uploads textures at high frequency?"
+    - "How to put it? This framework isn't intended for developing professional applications. For personal-level projects, if you can ensure minimal dynamic updates and control texture size (within a few hundred pixels), I believe it won't affect performance.
+    Moreover, the framework I've built includes some performance optimization algorithms to address some of your concerns."
+
+- So, essentially, what I've actually done is the following:
+    - **Logic-driven control**
+        - For example, some intended animations can only play at 60fps.
+        - Some logic code can only execute at 60fps.
+        - After using the framework, all logic and animations must be driven by the new 60-frame logic.
+        - The program's running effect/animation effect should not differ due to subjective device differences (screen refresh rate).
+
+    - **Stage monitoring**
+        - Generate a real-time managed scene structure tree for the traditional Flash Stage.
+        - Each node on the scene tree corresponds to a flash.display.DisplayObject object and stores all its states (e.g., currentFrame, visible, alpha, x, y, scaleX, scaleY, rotation, etc.). Most importantly, **anchor point information**.
+        - Traverse and inspect the scene tree, comparing each sub-clip for changes. **Changes are of two types**:
+            - **1. Morphological changes (movie clip frame number, sub-clip set changes, content changes, etc.)**
+            - **2. Property value changes (transform property changes, synchronize values only).**
+
+    - **Starling rendering**
+        - For the real-time managed scene tree generated from the traditional Flash stage, the Starling stage must synchronize changes that occur on the scene tree's movie clips in real-time to the Starling stage.
+        - The layer order of all starling.display.DisplayObject objects within the same parent clip can be displayed and sorted according to the childrenIndex value synchronized from traditional clips.
+
+    - **Texture cache management**
+        - To reduce DrawCalls, this framework uses the MaxRects algorithm for 2D space UV bin packing.
+        - Generate a corresponding unique hash string for each frame/each DisplayObject object in the scene.
+
+    - **Input event forwarding**
+        - Since all content on the CPU layer is hidden, mouse click events registered on them become invalid.
+        - The input forwarder I designed can forward mouse input events to the corresponding flash.display.DisplayObject.
+
+**Framework Structure**
+
+- Package/class structure:
 - **fse**
-  - **core包**
-    - **FSE** (核心静态类，接口封装)
-    - **FSE_Kernel** (核心静态类的真身)
-    - **FSE_Manager** (脏活累活都他干，此类需要实例化，使用单例模式)
-    - **FSE_Input** (输入事件转发器)
-  - **display包**
-    - **Watcher** (场景树监控)
-    - **Node** (存储单个影片剪辑详细信息，并包含Node子集)
-    - **Scanner** (用于扫描传统舞台上的场景树)
-    - **Controller** (动画剪辑逻辑控制器)
-    - **StatusSaver** (状态保存器)
-  - **events包**
-    - **FSE_Event** (这个其实作用不大，就是写一些事件常量,比如FIX_ENTER_FRAME)
-  - **conf包**
-    - **Config** (配置类)
-  - **starling包**
-    - **StarlingMain** (初始化Starling舞台)
-    - **StarlingVO** (Starling影片剪辑根)
-    - **StarlingManager** (负责同步并管理)
-  - **cache包**
-    - **AtlasPage** (图集分页管理器)
-    - **CacheManager** (纹理缓存管理器)
-    - **Cache** (纹理缓存实体类)
-  - **utils包**
-    - **Hash** (BitmapData快速哈希)
-    - **MD5** (散列加密)
+    - **core package**
+        - **FSE** (Core static class, interface encapsulation)
+        - **FSE_Kernel** (The true body of the core static class)
+        - **FSE_Manager** (Does all the heavy lifting, this class needs instantiation, uses singleton pattern)
+        - **FSE_Input** (Input event forwarder)
+    - **display package**
+        - **Watcher** (Scene tree monitoring)
+        - **Node** (Stores detailed information for a single movie clip and contains child Nodes)
+        - **Scanner** (Used to scan the scene tree on the traditional stage)
+        - **Controller** (Animation clip logic controller)
+        - **StatusSaver** (State saver)
+    - **events package**
+        - **FSE_Event** (This doesn't have much effect, just defines some event constants, e.g., FIX_ENTER_FRAME)
+    - **conf package**
+        - **Config** (Configuration class)
+    - **starling package**
+        - **StarlingMain** (Initializes the Starling stage)
+        - **StarlingVO** (Starling movie clip root)
+        - **StarlingManager** (Responsible for synchronization and management)
+    - **cache package**
+        - **AtlasPage** (Atlas page manager)
+        - **CacheManager** (Texture cache manager)
+        - **Cache** (Texture cache entity class)
+    - **utils package**
+        - **Hash** (BitmapData fast hash)
+        - **MD5** (Hash encryption)
 
+**Contact the Author**
 
-## 联系作者
-- 作者: undefined (一位有理想的独立游戏制作人)
-- 微信: hbx098hbx123 (欢迎交朋友)
-- 邮箱: 2199182141@qq.com
-- 你可以添加作者微信，反馈BUG或者建议
+- Author: undefined (An aspiring independent game developer)
+- WeChat: hbx098hbx123 (Welcome to make friends)
+- Email: 2199182141@qq.com
+- You can add the author on WeChat to report bugs or give suggestions.
 
 ---
-> 祝大家2026年马到成功，**代码会老，但创造的心永远年轻。**\
-> 如果这个框架，能让你在未来的某天，更轻盈、更自由地做出心中所想，那便是它全部的意义。\
-> 感谢 AS3，感谢仍在这里的你。\
-> **2026.1.29**\
-> 于一个即将春暖花开的日子前
-
+> Wishing everyone success in the Year of the Horse, 2026. **Code may age, but the heart of creation remains forever young.**\
+> If this framework allows you, someday in the future, to create what you envision more lightly and freely, that is its entire purpose.\
+> Thanks to AS3, and thanks to you who are still here.\
+> **January 29, 2026**\
+> On a day just before spring is about to bloom.
