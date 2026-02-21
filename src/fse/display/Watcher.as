@@ -197,7 +197,6 @@ import fse.utils.FSEProfiler;
 		// [修改] 改为 internal 供 Scanner 调用
 		internal function createNode(target:DisplayObject , parentNode:Node):Node
 		{
-			FSEProfiler.begin("Node_create");
 			var enableCache1:Boolean = StatusSaver.getCacheConfig(target);
 			var enableCache2:Boolean = false
 			if(target.parent){
@@ -211,7 +210,6 @@ import fse.utils.FSEProfiler;
 			var node:Node = new Node(target, parentNode , deleteNodeFromMap, enableCache);
 			_nodeMap[target] = node;
 			return node;
-			FSEProfiler.end("Node_create");
 		}
 		
 		// [修改] 改为 internal 供 Scanner 调用

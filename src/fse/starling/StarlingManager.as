@@ -210,8 +210,7 @@
 			
 			_viewZIndexMap[view] = node.childIndex;
 			
-			syncTransform(node, view ,"all");
-			
+			syncTransformAll(node, view);
 			if (node.source && node.source.filters && node.source.filters.length > 0) {
 				syncFilters(node, view);
 			}
@@ -445,14 +444,14 @@
         /**
          * 同步基础变换属性 (x, y, scale, rotation, alpha, visible)
          */
-		private function syncTransform(node:Node, view:DisplayObject , type:String = 'all'):void {
+		private function syncTransform(node:Node, view:DisplayObject , type:String):void {
 			if (!node.source) return;
 			
-			if (type == Node.UPDATE_PROP_POS || type=='all') {
+			if (type == Node.UPDATE_PROP_POS) {
 				view.x = node.source.x;
 				view.y = node.source.y;
 			}
-			if (type == Node.UPDATE_PROP_SCALE || type=='all') {
+			if (type == Node.UPDATE_PROP_SCALE) {
 				if (node.source is flash.display.DisplayObjectContainer) {
 					view.scaleX = node.source.scaleX;
 					view.scaleY = node.source.scaleY;
@@ -467,13 +466,13 @@
 					}
 				}
 			}
-			if (type == Node.UPDATE_PROP_ROTA || type=='all') {
+			if (type == Node.UPDATE_PROP_ROTA) {
 				view.rotation = deg2rad(node.source.rotation);
 			}
-			if (type == Node.UPDATE_PROP_ALPHA || type=='all') {
+			if (type == Node.UPDATE_PROP_ALPHA) {
 				view.alpha = node.source.alpha;
 			}
-			if (type == Node.UPDATE_PROP_VISIBLE || type=='all') {
+			if (type == Node.UPDATE_PROP_VISIBLE) {
 				view.visible = node.getLogicalVisible();
 			}
 			if(FSE_Manager.keyRole == node.source.name){
@@ -481,7 +480,32 @@
 				if (kernel) kernel.starlingHelpDraw();
 			}
 		}
-        
+		private function syncTransformAll(node:Node, view:DisplayObject):void {
+			if (!node.source) return;
+			
+			view.x = node.source.x;
+			view.y = node.source.y;
+			if (node.source is flash.display.DisplayObjectContainer) {
+				view.scaleX = node.source.scaleX;
+				view.scaleY = node.source.scaleY;
+			} else {
+				// 🚀 防御 #1009: 如果是 Image 且纹理丢失，禁止修改 width/height，改用 scale
+				if (view is Image && (view as Image).texture == null) {
+					view.scaleX = node.source.scaleX;
+					view.scaleY = node.source.scaleY;
+				} else {
+					view.width = node.source.width;
+					view.height = node.source.height;
+				}
+			}
+			view.rotation = deg2rad(node.source.rotation);
+			view.alpha = node.source.alpha;
+			view.visible = node.getLogicalVisible();
+			if(FSE_Manager.keyRole == node.source.name){
+				// 防御内核未初始化
+				if (kernel) kernel.starlingHelpDraw();
+			}
+		}
         /**
          * 同步纹理 (用于 TextField 变化或 Shape 重绘)
          */
